@@ -63,6 +63,93 @@
 | updated_at | Timestamp | |
 | deleted_at | Timestamp | Soft delete |
 
+## campaigns
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_id | UUID | FK → creators.id |
+| name | Text | Internal campaign name |
+| description | Text | Optional |
+| status | Text | Draft, Active, Paused, Scheduled, Archived |
+| primary_creator_hub_id | UUID | FK → creator_hubs.id (optional) |
+| starts_at | Timestamp | Optional |
+| ends_at | Timestamp | Optional |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## triggers
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| campaign_id | UUID | FK → campaigns.id |
+| platform | Text | Instagram, TikTok, Facebook, etc. |
+| content_type | Text | Reel, Post, Story, Video |
+| platform_content_id | Text | ID from the platform |
+| event_type | Text | Comment, Like, DM (future) |
+| trigger_type | Text | Keywords, AI, All Comments |
+| trigger_value | Text | Keywords or AI prompt |
+| priority | Integer | Evaluation order |
+| status | Text | Active, Paused |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## matching_method
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| trigger_id | UUID | FK → triggers.id |
+| keyword | Text | Keyword or phrase |
+| match_type | Text | Exact, Contains |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## deliveries
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| campaign_id | UUID | FK → campaigns.id |
+| type | Text | DM, Public Reply, Both |
+| message | Text | Optional template |
+| include_creator_hub | Boolean | |
+| status | Text | Active, Paused |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## resources
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_id | UUID | FK → creators.id |
+| name | Text | Internal name |
+| resource_type | Text | Recipe, PDF, Text, Video, Link, File, Image |
+| title | Text | Public title |
+| description | Text | Optional |
+| content_body | Text | Resource content |
+| content_url | Text | File or external URL |
+| thumbnail | Text | URL |
+| status | Text | Draft, Active, Archived |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## delivery_resources
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| delivery_id | UUID | FK → deliveries.id |
+| resource_id | UUID | FK → resources.id |
+| display_order | Integer | Order shown |
+
 ## Architecture Decisions
 
 - Billing belongs to Organization.
