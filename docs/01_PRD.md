@@ -1,4 +1,4 @@
-# CreatorOS Product Requirements Document
+# SimpleDee Product Requirements Document
 
 ## Mission
 

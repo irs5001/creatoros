@@ -150,6 +150,63 @@
 | resource_id | UUID | FK → resources.id |
 | display_order | Integer | Order shown |
 
+## products
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_id | UUID | FK → creators.id |
+| name | Text | Internal name |
+| title | Text | Public title |
+| description | Text | Optional |
+| price | Decimal | |
+| currency | Text | USD, etc. |
+| stripe_product_id | Text | |
+| stripe_price_id | Text | |
+| thumbnail | Text | URL |
+| status | Text | Draft, Active, Archived |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## product_resources
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| product_id | UUID | FK → products.id |
+| resource_id | UUID | FK → resources.id |
+| display_order | Integer | |
+
+## recommendations
+
+Stores information about products, services, websites, or other links that a creator wants to recommend.
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_id | UUID | FK → creators.id |
+| name | Text | Internal name |
+| title | Text | Public title |
+| description | Text | Optional |
+| destination_url | Text | URL to open |
+| image_url | Text | Optional thumbnail |
+| button_text | Text | Example: "Shop Now" |
+| category | Text | Optional organization |
+| status | Text | Draft, Active, Archived |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## delivery_recommendations
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| delivery_id | UUID | FK → deliveries.id |
+| recommendation_id | UUID | FK → recommendations.id |
+| display_order | Integer | Display order |
+
 ## Architecture Decisions
 
 - Billing belongs to Organization.
@@ -164,6 +221,53 @@
 - Recommendations are reusable.
 - Creator Hub is modular.
 - Analytics are tracked per Campaign.
+
+## creator_hubs
+
+Represents a creator's public hub where followers can discover resources, products, recommendations, and other content.
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_id | UUID | FK → creators.id |
+| name | Text | Internal name |
+| title | Text | Public heading |
+| description | Text | Optional |
+| slug | Text | Public URL slug |
+| theme_id | Text | Theme identifier |
+| status | Text | Draft, Active, Archived |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## creator_hub_resources
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_hub_id | UUID | FK → creator_hubs.id |
+| resource_id | UUID | FK → resources.id |
+| display_order | Integer | |
+
+## creator_hub_products
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_hub_id | UUID | FK → creator_hubs.id |
+| product_id | UUID | FK → products.id |
+| display_order | Integer | |
+
+## creator_hub_recommendations
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| creator_hub_id | UUID | FK → creator_hubs.id |
+| recommendation_id | UUID | FK → recommendations.id |
+| display_order | Integer | |
+
+
 
 ## Database Design Principles
 

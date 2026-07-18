@@ -1,6 +1,6 @@
-# CreatorOS
+# SimpleDee
 
-CreatorOS is a SaaS platform that helps creators turn social media engagement into customers through intelligent automation.
+SimpleDee is a SaaS platform that helps creators turn social media engagement into customers through intelligent automation.
 
 ## Mission
 
