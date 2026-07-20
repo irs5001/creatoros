@@ -5,16 +5,49 @@
 - Organization
 - User
 - Creator
+- Contact
+- Contact Identity
 - Creator Hub
 - Campaign
 - Trigger
-- Delivery
+- Action
+- Campaign Execution
 - Resource
 - Product
 - Recommendation
-- Follower
-- Comment
 - Analytics
+
+## Contacts
+
+SimpleDee models people as **Contacts**, not Followers.
+
+A Contact represents a unique individual regardless of how they interact with a creator.
+
+Contacts may have one or more associated identities (social accounts, email addresses, phone numbers, etc.) that are linked over time as sufficient evidence becomes available.
+
+A Contact should never be automatically merged based solely on matching names or usernames.
+
+Identity resolution should only occur through high-confidence signals such as:
+
+- Verified email address
+- Phone number
+- OAuth login
+- Explicit user confirmation
+- Future identity resolution workflows
+
+This architecture allows a single Contact to interact across multiple communication channels while preserving data integrity.
+
+## Contact Philosophy
+
+SimpleDee prioritizes **data integrity over aggressive identity resolution**.
+
+Duplicate Contacts are acceptable.
+
+Incorrect merges are not.
+
+New platform identities should initially create their own Contact unless high-confidence evidence exists to associate them with an existing Contact.
+
+Identity resolution is handled by application logic rather than the database schema.
 
 ## organizations
 
@@ -28,6 +61,8 @@
 | created_at | Timestamp | |
 | updated_at | Timestamp | |
 | deleted_at | Timestamp | Soft delete |
+
+
 
 ## users
 
@@ -62,6 +97,45 @@
 | created_at | Timestamp | |
 | updated_at | Timestamp | |
 | deleted_at | Timestamp | Soft delete |
+
+## contacts
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| organization_id | UUID | FK → organizations.id |
+| display_name | Text | Best known name |
+| primary_email | Text | Optional |
+| primary_phone | Text | Optional |
+| status | Text | Active, Archived, Blocked |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+| deleted_at | Timestamp | Soft delete |
+
+## contact_identities
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| contact_id | UUID | FK → contacts.id |
+| platform | Text | Instagram, TikTok, Facebook, Email, SMS, etc. |
+| platform_user_id | Text | Unique identifier from the platform |
+| username | Text | Platform username |
+| display_name | Text | Platform display name |
+| verified | Boolean | High-confidence identity |
+| first_seen_at | Timestamp | |
+| last_seen_at | Timestamp | |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
+
+## contact_tags
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| contact_id | UUID | FK → contacts.id |
+| tag | Text | User-defined tag |
+| created_at | Timestamp | |
 
 ## campaigns
 
@@ -122,6 +196,24 @@
 | created_at | Timestamp | |
 | updated_at | Timestamp | |
 | deleted_at | Timestamp | Soft delete |
+
+## campaign_executions
+
+Tracks each Contact's progress through a Campaign independently.
+
+| Column | Type | Notes |
+|---------|------|-------|
+| id | UUID | Primary Key |
+| campaign_id | UUID | FK → campaigns.id |
+| contact_id | UUID | FK → contacts.id |
+| status | Text | Running, Waiting, Completed, Cancelled, Failed |
+| current_step | Integer | Current workflow step |
+| next_run_at | Timestamp | Next scheduled execution |
+| started_at | Timestamp | |
+| completed_at | Timestamp | Optional |
+| exit_reason | Text | Optional |
+| created_at | Timestamp | |
+| updated_at | Timestamp | |
 
 ## resources
 
@@ -212,7 +304,19 @@ Stores information about products, services, websites, or other links that a cre
 - Billing belongs to Organization.
 - User and Creator are separate entities.
 - Campaigns contain multiple Triggers.
-- Campaigns contain multiple Deliveries.
+- Billing belongs to Organization.
+- Contacts belong to Organization.
+- User and Creator are separate entities.
+- Campaigns contain multiple Triggers.
+- Campaigns contain multiple Deliveries (Actions).
+- Campaigns create Campaign Executions at runtime.
+- Resources are reusable.
+- Products are reusable.
+- Recommendations are reusable.
+- Creator Hub is modular.
+- Duplicate Contacts are acceptable.
+- Incorrect identity merges are not.
+- Analytics are tracked per Campaign.
 - Campaigns contain multiple Resources.
 - Campaigns contain multiple Products.
 - Campaigns contain multiple Recommendations.
@@ -276,3 +380,5 @@ Represents a creator's public hub where followers can discover resources, produc
 - Store timestamps in UTC.
 - Reuse entities whenever possible.
 - Design for multi-platform support.
+- Prioritize data integrity over automatic identity resolution.
+- Separate configuration data from runtime data whenever possible.
