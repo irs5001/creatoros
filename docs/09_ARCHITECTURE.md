@@ -11,7 +11,7 @@ Examples include:
 - Reordering page sections instead of unrestricted drag-anywhere placement.
 - Choosing from curated themes rather than unlimited styling options.
 - Maintaining mobile-friendly layouts across all Creator Hubs.
-- Preserving consistent navigation and interaction patterns for followers.
+- Preserving consistent navigation and interaction patterns for contacts.
 
 The goal is to provide flexibility while ensuring every Creator Hub remains fast, intuitive, and optimized for conversion.
 
@@ -20,7 +20,7 @@ The goal is to provide flexibility while ensuring every Creator Hub remains fast
 SimpleDee is built with two primary users in mind:
 
 - Creators build and manage their business from desktop.
-- Followers primarily interact with Creator Hubs and campaign content from mobile devices.
+- Contacts primarily interact with Creator Hubs and campaign content from mobile devices.
 
 Every public-facing experience should be designed for fast loading, thumb-friendly interaction, and minimal friction.
 

@@ -82,7 +82,7 @@ Multiple platforms can point to the same campaign.
 
 ### Monetization
 
-Creators decide exactly what followers receive.
+Creators decide exactly what contacts receive.
 
 Examples:
 
@@ -92,7 +92,7 @@ Examples:
 - Resource + Recommendations
 - Any combination
 
-The follower always receives what they requested first.
+The contact always receives what they requested first.
 
 ## Non-Goals (MVP)
 
