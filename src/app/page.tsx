@@ -1,4 +1,7 @@
 import Sidebar from "@/components/layout/Sidebar";
+import PageHeader from "@/components/layout/PageHeader";
+import MetricCard from "@/components/dashboard/MetricCard";
+import SystemStatus from "@/components/dashboard/SystemStatus";
 
 export default function Home() {
   return (
@@ -7,31 +10,36 @@ export default function Home() {
         <Sidebar />
 
         <section className="flex-1 p-10">
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                Dashboard
-              </h2>
+          <PageHeader
+              title="Dashboard"
+              subtitle="Welcome to SimpleDee."
+              buttonText="+ New Campaign"
+          />
 
-              <p className="text-gray-500">
-                Welcome to SimpleDee.
-              </p>
-            </div>
+          <div className="grid grid-cols-4 gap-6">
+  <MetricCard
+    title="Campaigns"
+    value="0"
+  />
 
-            <button className="rounded-lg bg-blue-600 px-5 py-2 text-white hover:bg-blue-700">
-              + New Campaign
-            </button>
-          </div>
+  <MetricCard
+    title="Audience"
+    value="0"
+  />
 
-          <div className="rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center">
-            <h3 className="text-xl font-semibold">
-              Your dashboard is coming soon.
-            </h3>
+  <MetricCard
+    title="Messages Sent"
+    value="0"
+  />
 
-            <p className="mt-2 text-gray-500">
-              This is where we'll build your creator dashboard.
-            </p>
-          </div>
+  <MetricCard
+    title="Products"
+    value="0"
+  />
+</div>
+
+<SystemStatus />
+
         </section>
       </div>
     </main>
